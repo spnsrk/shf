@@ -1,0 +1,77 @@
+.MainPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.MainPageContentText {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    width: 100%;
+}
+.MainPageContentText p{
+    color: #252A34;
+    text-align: justify;
+    font-family: "Nunito Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    margin: 20px 0px;
+}
+.imagecontainer img {
+    width: 100%;
+    max-width: 600px;
+}
+.OurWorkSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center; 
+}
+
+.OurWorkHeading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.OurWorkHeading h1 {
+    color: #252A34;
+    font-family: "Playfair Display";
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    text-transform: capitalize;
+    text-align: center;
+    margin-bottom: 0.5rem; 
+}
+
+.OurWorkHeading hr {
+    margin: 0 auto; 
+}
+
+@media (min-width: 768px) {
+    .MainPage {
+        flex-direction: row;
+    }
+    .MainPageContentText {
+        padding-left: 60px;
+        width: 60%;
+    }
+    .OurWorkHeading h1 {
+        font-size: 36px;
+        line-height: 50px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .MainPageContentText {
+        padding-left: 100px;
+        width: 800px;
+    }
+}

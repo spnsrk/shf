@@ -1,0 +1,144 @@
+.flfMainPage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding: 0px 20px;
+}
+.flfMainPageImage img{
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .flfMainPage {
+    gap: 80px;
+    padding: 0px 60px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flfMainPage {
+    gap: 180px;
+    padding: 0px 100px;
+  }
+}
+
+.flfMainPageContent p {
+  color: #252A34;
+  text-align: justify;
+  font-family: "Nunito Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  margin: 20px 0px;
+}
+
+
+/* Styles for the content container */
+/* .flfMainPageContent {
+  max-width: 670px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left; 
+  margin-left: -20px;
+}
+
+.flfMainPageContent h1 {
+  color: #252A34;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  text-transform: capitalize;
+}
+
+.flfMainPageContent h2 {
+  color: #252A34;
+  font-family: "Playfair Display";
+  font-size: 39px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 50px;
+  text-transform: capitalize;
+}
+
+.flfMainPageContent p {
+  color: #252A34;
+  text-align: justify;
+  font-family: "Nunito Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; 
+} */
+
+/* Explore Section */
+
+.exploreSection {
+  padding: 30px 16px;
+  text-align: left;
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .exploreSection {
+    padding: 60px 60px;
+    margin-left: 50px;
+  }
+}
+
+.heading h1 {
+  color: #252A34;
+  font-family: "Playfair Display";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 50px;
+  text-transform: capitalize;
+}
+
+.imageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start; 
+  gap: 16px; 
+  margin-top: 20px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+@media (min-width: 768px) {
+  .imageContainer {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-left: 60px;
+    margin-right: 60px;
+    gap: 10px;
+  }
+}
+
+.imageBlock {
+  flex: 1;
+  max-width: 300px;
+  text-align: center;
+}
+
+.imageWrapper img {
+  width: 100%;
+  max-width: 350px; 
+  border-radius: 8px;
+}
+
+.textWrapper p {
+  margin-top: 10px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 16px;
+  color: #252A34;
+  text-align: center;
+}

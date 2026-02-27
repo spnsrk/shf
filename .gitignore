@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+.allai/
+.env
+.env.local
+.env.*.local
+frontend/.vite/
+frontend/dist/
+backend/node_modules/
+Printify/
+*.log

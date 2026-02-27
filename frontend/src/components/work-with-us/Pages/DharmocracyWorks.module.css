@@ -1,0 +1,116 @@
+.DharmocracyMainPage{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 16px;
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .DharmocracyMainPage {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 40px 40px;
+        gap: 60px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .DharmocracyMainPage {
+        padding: 60px 60px;
+        gap: 100px;
+    }
+}
+
+.DharmocracyMainPageContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.DharmocracyMainPageHeading img{
+    width: 100%;
+    max-width: 733px;
+    height: auto;
+    flex-shrink: 0;
+}
+.ContentHeading h1{
+    color: #252A34;
+    font-family: Montserrat;
+    margin-top: 32px;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.ContentHeading p{
+    color: #252A34;
+    text-align: justify;
+    font-family: "Nunito Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px; /* 150% */
+    margin: 20px 0px;
+}
+.GetEnvolved h3{
+    color: #252A34;
+    font-family: "Nunito Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px; /* 150% */
+}
+.GetEnvolved p{
+    color: #455A64;
+    font-family: "Nunito Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 5px;
+}
+.DharmocracyMainPageImage{
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+}
+
+@media (min-width: 768px) {
+    .DharmocracyMainPageImage {
+        margin-top: 50px;
+        margin-right: 50px;
+        width: 120%;
+    }
+}
+
+.OurWorkSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center; 
+}
+
+.OurWorkHeading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.OurWorkHeading h1 {
+    color: #252A34;
+    font-family: "Playfair Display";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 50px;
+    text-transform: capitalize;
+    text-align: center;
+    margin-bottom: 0.5rem; 
+}
+
+.OurWorkHeading hr {
+    margin: 0 auto; 
+}
+

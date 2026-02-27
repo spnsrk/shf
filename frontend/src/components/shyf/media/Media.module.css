@@ -1,0 +1,28 @@
+.MainPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.MainPage img{
+    padding-top: 20px;
+    width: 100%;
+}
+.MainPageContent p{
+    color: #000;
+    text-align: justify;
+    font-family: "Nunito Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+@media (min-width: 768px) {
+    .MainPage {
+        flex-direction: row;
+    }
+    .MainPage img {
+        padding-top: 80px;
+        width: 50%;
+    }
+}

@@ -1,0 +1,139 @@
+name: Deploy to Staging EC2
+
+on:
+  push:
+    branches:
+      - stage-SHF
+  workflow_dispatch:
+
+env:
+  EC2_INSTANCE_ID: i-06a757a94b88d1fa7
+  EC2_REGION: ap-south-1
+  EC2_USER: ubuntu
+  EC2_HOST: 13.203.157.105
+  DEPLOY_BUCKET: shf-deploy-artifacts
+
+jobs:
+  deploy:
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ──────────────────────────────────────────────
+      # Build Frontend
+      # ──────────────────────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+        env:
+          VITE_REACT_API_URL: https://staging.scottishhindufoundation.com/api
+
+      # ──────────────────────────────────────────────
+      # Upload build to S3
+      # ──────────────────────────────────────────────
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.EC2_REGION }}
+
+      - name: Upload build to S3
+        run: |
+          tar czf /tmp/staging-frontend-dist.tar.gz -C frontend/dist .
+          aws s3 cp /tmp/staging-frontend-dist.tar.gz s3://${{ env.DEPLOY_BUCKET }}/staging-frontend-dist.tar.gz
+
+          tar czf /tmp/staging-backend.tar.gz \
+            --exclude='node_modules' --exclude='.env' --exclude='uploads' \
+            -C backend .
+          aws s3 cp /tmp/staging-backend.tar.gz s3://${{ env.DEPLOY_BUCKET }}/staging-backend.tar.gz
+          echo "Frontend and backend builds uploaded to S3"
+
+      # ──────────────────────────────────────────────
+      # SSH to EC2 and deploy
+      # ──────────────────────────────────────────────
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keygen -t rsa -b 2048 -m PEM -f ~/.ssh/deploy_key -N "" -q
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ env.EC2_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Deploy to Staging EC2
+        run: |
+          aws ec2-instance-connect send-ssh-public-key \
+            --instance-id ${{ env.EC2_INSTANCE_ID }} \
+            --instance-os-user ${{ env.EC2_USER }} \
+            --ssh-public-key file://~/.ssh/deploy_key.pub
+          sleep 2
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o ConnectTimeout=30 \
+            ${{ env.EC2_USER }}@${{ env.EC2_HOST }} bash -s << 'ENDSSH'
+            set -e
+
+            echo "=============================="
+            echo "  Downloading build from S3"
+            echo "=============================="
+            aws s3 cp s3://shf-deploy-artifacts/staging-frontend-dist.tar.gz /tmp/staging-frontend-dist.tar.gz --profile deploy
+
+            echo "=============================="
+            echo "  Deploying frontend"
+            echo "=============================="
+            sudo mkdir -p /var/www/shf
+            sudo rm -rf /var/www/shf/*
+            sudo tar xzf /tmp/staging-frontend-dist.tar.gz -C /var/www/shf/
+            sudo chown -R www-data:www-data /var/www/shf/
+            rm -f /tmp/staging-frontend-dist.tar.gz
+            sudo nginx -t && sudo systemctl reload nginx
+            echo "Frontend deployed."
+
+            echo "=============================="
+            echo "  Deploying backend"
+            echo "=============================="
+            aws s3 cp s3://shf-deploy-artifacts/staging-backend.tar.gz /tmp/staging-backend.tar.gz --profile deploy
+            mkdir -p ~/hims_Backend
+            tar xzf /tmp/staging-backend.tar.gz -C ~/hims_Backend/
+            rm -f /tmp/staging-backend.tar.gz
+            cd ~/hims_Backend
+            npm install --production 2>&1 | tail -3
+            pm2 restart server || pm2 start server.js --name server
+            pm2 save
+            echo "Backend deployed."
+
+            echo "=============================="
+            echo "  Deployment complete!"
+            echo "=============================="
+          ENDSSH
+
+      # ──────────────────────────────────────────────
+      # Verify & Cleanup
+      # ──────────────────────────────────────────────
+      - name: Verify deployment
+        run: |
+          sleep 5
+          echo "Checking backend API..."
+          curl -sf --connect-timeout 10 http://${{ env.EC2_HOST }}:8000/api/events > /dev/null \
+            && echo "Backend API: OK" || echo "Backend API: FAILED"
+          echo "Checking frontend..."
+          curl -s --connect-timeout 10 http://${{ env.EC2_HOST }} > /dev/null \
+            && echo "Frontend: OK" || echo "Frontend: Check Nginx"
+
+      - name: Cleanup
+        if: always()
+        run: |
+          aws s3 rm s3://${{ env.DEPLOY_BUCKET }}/staging-frontend-dist.tar.gz 2>/dev/null || true
+          aws s3 rm s3://${{ env.DEPLOY_BUCKET }}/staging-backend.tar.gz 2>/dev/null || true
+          rm -f ~/.ssh/deploy_key ~/.ssh/deploy_key.pub

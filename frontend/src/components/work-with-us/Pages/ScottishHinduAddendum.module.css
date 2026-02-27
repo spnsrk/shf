@@ -1,0 +1,112 @@
+.AddendumMainPage{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 16px;
+    gap: 24px;
+}
+
+.AddendumMainPageContent{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .AddendumMainPage {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 40px 40px;
+        gap: 40px;
+    }
+    .AddendumMainPageContent {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .AddendumMainPage {
+        padding: 60px 60px;
+        gap: 50px;
+    }
+}
+
+.slogan{
+    display: flex;
+    align-items: center;
+}
+.slogan p{
+    color: #252A34;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.AddendumMainPageHeading{
+    color: #252A34;
+    font-family: "Playfair Display";
+    font-size: clamp(24px, 5vw, 39px);
+    font-style: normal;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.ContentHeading h1{
+    color: #252A34;
+    font-family: Montserrat;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.ContentHeading p{
+    color: #252A34;
+    text-align: justify;
+    font-family: "Nunito Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px; /* 150% */
+    margin: 20px 0px;
+}
+.AddendumMainPageImage{
+    width: 100%;
+    height: auto;
+}
+
+@media (min-width: 768px) {
+    .AddendumMainPageImage {
+        width: 50%;
+    }
+}
+
+.actionButtons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.actionButton {
+    display: flex;
+    width: 219px;
+    height: 56px;
+    padding: 11px 25px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: #F4911F;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    text-transform: capitalize;
+    border: none;
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    background: #8b5cf6;
+}

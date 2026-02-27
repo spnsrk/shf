@@ -1,0 +1,96 @@
+.PageContent{
+    display: flex;
+    flex-direction: column;
+    padding: 0px 16px;
+    gap: 30px;
+}
+.Heading{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+.Heading h1{
+    color: #000;
+    text-align: center;
+    font-family: "Playfair Display";
+    font-size: clamp(28px, 6vw, 55px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130.49%; 
+}
+.Heading p{
+    color: rgba(37, 42, 52, 0.50);
+    text-align: center;
+    font-family: Inter;
+    font-size: clamp(14px, 3vw, 20px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130.49%;
+}
+.PageCards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+.Card{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 310px;
+}
+.Card img{
+    width: 100%;
+    max-width: 310px;
+    height: auto;
+    aspect-ratio: 310 / 320;
+    object-fit: cover;
+}
+.Card h1{
+    color: #000;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130.49%;
+    margin: 0 15px;
+}
+.Card p{
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160.49%;
+    margin: 0 15px;
+}
+.PageText p{
+    color: #000;
+    text-align: justify;
+    font-family: "Nunito Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    margin: 30px 0px;
+}
+
+@media (min-width: 768px) {
+    .PageContent {
+        padding: 0px 60px;
+        gap: 40px;
+    }
+    .PageCards {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 1024px) {
+    .PageContent {
+        padding: 0px 100px;
+        gap: 50px;
+    }
+}
